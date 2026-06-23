@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TRIVY_VERSION: v0.58.1
+  TRIVY_VERSION: 0.71.2
 
 jobs:
   build:
@@ -37,10 +37,13 @@ jobs:
         run: npm ci
 
       - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.3.1
-        with:
-          version: ${{ env.TRIVY_VERSION }}
-          cache: true
+        run: |
+          curl -sfL \
+            "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" \
+            -o /tmp/trivy.tar.gz
+          tar -xzf /tmp/trivy.tar.gz -C /tmp trivy
+          sudo install /tmp/trivy /usr/local/bin/trivy
+          trivy --version
 
       - name: Run checks (lint + type-check + security)
         run: make check
