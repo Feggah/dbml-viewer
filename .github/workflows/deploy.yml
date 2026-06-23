@@ -37,10 +37,10 @@ jobs:
         run: npm ci
 
       - name: Install Trivy
-        run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin "${TRIVY_VERSION}"
-          trivy --version
+        uses: aquasecurity/setup-trivy@v0.3.1
+        with:
+          version: ${{ env.TRIVY_VERSION }}
+          cache: true
 
       - name: Run checks (lint + type-check + security)
         run: make check
