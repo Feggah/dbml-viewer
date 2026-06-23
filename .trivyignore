@@ -1,0 +1,8 @@
+# Accepted, documented vulnerabilities for the Trivy filesystem scan.
+# Format: one vulnerability ID per line (CVE-... or GHSA-...).
+#
+# GHSA-67mh-4wv8-2f99 - esbuild dev server can be reached cross-origin.
+#   Build-tooling only (esbuild ships with vite). It affects the local
+#   `npm run dev` server, never the static files published to GitHub Pages,
+#   so it cannot reach end users. Revisit when upgrading to vite >= 6.
+GHSA-67mh-4wv8-2f99
